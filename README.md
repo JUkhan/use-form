@@ -3,7 +3,7 @@
 an easy, simple but robust react hook for form ui
 
 ```ts
-import { useForm } from "use-form";
+import { useForm } from "use-formjs";
 const login = () => {
   const { setValue, getValue, formData } = useForm();
 
@@ -31,7 +31,7 @@ const login = () => {
 Validation
 
 ```ts
-import { useForm } from "use-form";
+import { useForm } from "use-formjs";
 const login = () => {
   const { form, setValue, getValue, formData, validate } = useForm({
     userName: {
@@ -41,7 +41,7 @@ const login = () => {
           ? setError(
               "userName",
               "error",
-              "user name should not be empty and bigger than 2 char"
+              "user name should not be empty and bigger than 3 char"
             )
           : setError("userName", "", "");
       },
