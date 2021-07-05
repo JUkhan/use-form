@@ -1,6 +1,6 @@
 {
   "name": "use-formjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "an easy, simple but robust react hook for form ui",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -66,17 +66,15 @@
     "url": "git+https://github.com/JUkhan/use-form.git"
   },
   "keywords": [
-    "redux",
-    "rxjs",
-    "mono-state"
+    "hooks",
+    "react"
+    
   ],
   "author": "Jasim Khan<jasim.uddin.khan@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/JUkhan/use-form/issues"
   },
-  "homepage": "https://github.com/JUkhan/use-form#readme",
-  "dependencies": {
-    "mono-state": "^0.3.0"
-  }
+  "homepage": "https://github.com/JUkhan/use-form#readme"
+  
 }

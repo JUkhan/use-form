@@ -30,25 +30,30 @@ const login = () => {
 
 Validation
 
-````ts
+```ts
 import { useForm } from "use-form";
 const login = () => {
   const { form, setValue, getValue, formData, validate } = useForm({
-      userName:{value:'',
-      validate(val, setError){
-          !val || val.length > 3?
-          setError('userName','error','user name should not be empty and bigger than 2 char')
-          :setError('userName','','')
-      }}
+    userName: {
+      value: "",
+      validate(val, setError) {
+        !val || val.length > 3
+          ? setError(
+              "userName",
+              "error",
+              "user name should not be empty and bigger than 2 char"
+            )
+          : setError("userName", "", "");
+      },
+    },
   });
 
   const submit = () => {
-      if(validate())
-        console.log(formData());
+    if (validate()) console.log(formData());
   };
   return (
     <div>
-        <div classNames={form.userName.status}>{form.userName.message}</div>
+      <div classNames={form.userName.status}>{form.userName.message}</div>
       <input
         type="text"
         value={getValue("userName")}
@@ -63,5 +68,4 @@ const login = () => {
     </div>
   );
 };
-```ts
-````
+```
