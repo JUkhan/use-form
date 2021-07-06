@@ -3,27 +3,32 @@ import { useCallback, useRef, useReducer } from "react";
 type ErrorStatus = "" | "success" | "warning" | "error" | "validating";
 
 type Dispatch = (key: string, value: any) => void;
-type DispatchError = (
+
+export type DispatchError = (
   key: string,
   status: ErrorStatus,
   message?: string
 ) => void;
+export type ValidationHandler = (value: any) => [ErrorStatus, string];
 type FormConfig = {
   [key: string]: {
     value: any;
     status?: ErrorStatus;
     message?: string;
-    validate?: (value: any, dispatch: DispatchError) => void;
+    validate?: ValidationHandler;
   };
 };
 export function useForm(init?: FormConfig): {
-  form: FormConfig;
   setValue: Dispatch;
   getValue: (key: string) => any;
+  getStatus: (key: string) => any;
+  getMessage: (key: string) => any;
   validate: () => boolean;
   formData: () => any;
   setFormData: (record: any) => void;
   reset: () => void;
+  setError: DispatchError;
+  setValidation: (key: string, validatioHandler: ValidationHandler) => void;
 } {
   const [_, forceRender] = useReducer(() => ({}), {});
   const state = useRef(init ?? {});
@@ -40,18 +45,23 @@ export function useForm(init?: FormConfig): {
       state.current[key] = { value: "" };
     }
     state.current[key].value = value;
-    state.current[key].validate?.call(null, value, setError);
+    const res = state.current[key].validate?.call(null, value);
+    if (res) {
+      setError(key, res[0], res[1]);
+    }
     forceRender();
   }, []);
 
   const validate = useCallback(() => {
     const keys = Object.keys(state.current);
     keys.forEach((key) => {
-      state.current[key].validate?.call(
+      const res = state.current[key].validate?.call(
         null,
-        state.current[key].value,
-        setError
+        state.current[key].value
       );
+      if (res) {
+        setError(key, res[0], res[1]);
+      }
     });
     forceRender();
     return keys.filter((key) => state.current[key].status!!).length === 0;
@@ -71,6 +81,17 @@ export function useForm(init?: FormConfig): {
 
     []
   );
+  const getStatus = useCallback(
+    (key: string) => state.current[key]?.status ?? "",
+
+    []
+  );
+  const getMessage = useCallback(
+    (key: string) => state.current[key]?.message ?? "",
+
+    []
+  );
+
   const reset = useCallback(() => {
     Object.keys(state.current).forEach((key) => {
       state.current[key].value = "";
@@ -90,13 +111,26 @@ export function useForm(init?: FormConfig): {
     });
     forceRender();
   }, []);
+  const setValidation = useCallback(
+    (key: string, handler: ValidationHandler) => {
+      if (!state.current[key]) {
+        state.current[key] = { value: "" };
+      }
+      state.current[key].validate = handler;
+    },
+
+    []
+  );
   return {
-    form: state.current,
     setValue,
+    getValue,
+    getStatus,
+    getMessage,
     validate,
     formData,
-    getValue,
     setFormData,
     reset,
+    setError,
+    setValidation,
   };
 }

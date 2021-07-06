@@ -42,8 +42,6 @@ export function createRollupConfig(options, callback) {
       sourcemap: true,
       globals: {
         react: "React",
-        "rxjs/operators": "filter",
-        rxjs: "BehaviorSubject",
       },
       exports: "named",
     },

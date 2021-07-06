@@ -31,29 +31,35 @@ const login = () => {
 Validation
 
 ```ts
+import { useEffect } from "react";
 import { useForm } from "use-formjs";
 const login = () => {
-  const { form, setValue, getValue, formData, validate } = useForm({
-    userName: {
-      value: "",
-      validate(val, setError) {
-        !val || val.length > 3
-          ? setError(
-              "userName",
-              "error",
-              "user name should not be empty and bigger than 3 char"
-            )
-          : setError("userName", "", "");
-      },
-    },
-  });
+  const {
+    validate,
+    setValue,
+    getValue,
+    formData,
+    setValidation,
+    getStatus,
+    getMessage,
+  } = useForm();
+
+  useEffect(() => {
+    setValidation("userName", (val) =>
+      val ? ["", ""] : ["warning", "user name should not be empty"]
+    );
+    setValidation("password", (val) =>
+      val ? ["", ""] : ["warning", "password should not be empty"]
+    );
+  }, []);
 
   const submit = () => {
     if (validate()) console.log(formData());
   };
   return (
     <div>
-      <div classNames={form.userName.status}>{form.userName.message}</div>
+      <div className={getStatus("userName")}>{getMessage("userNamme")}</div>
+      <div className={getStatus("password")}>{getMessage("password")}</div>
       <input
         type="text"
         value={getValue("userName")}
