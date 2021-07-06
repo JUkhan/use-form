@@ -21,7 +21,7 @@ type FormConfig = {
 export function useForm(init?: FormConfig): {
   setValue: Dispatch;
   getValue: (key: string) => any;
-  getStatus: (key: string) => any;
+  getStatus: (key: string) => ErrorStatus;
   getMessage: (key: string) => any;
   validate: () => boolean;
   formData: () => any;
