@@ -3,7 +3,7 @@
 an easy, simple but robust react hook for form ui
 
 ```ts
-import { useForm } from "use-formjs";
+import { useForm } from "react-formjs";
 const login = () => {
   const { setValue, getValue, formData } = useForm();
 
@@ -32,7 +32,7 @@ Validation
 
 ```ts
 import { useEffect } from "react";
-import { useForm } from "use-formjs";
+import { useForm } from "react-formjs";
 const login = () => {
   const {
     validate,

@@ -1,6 +1,6 @@
 {
-  "name": "use-formjs",
-  "version": "0.0.4",
+  "name": "@jukhan/react-form",
+  "version": "0.0.1",
   "description": "an easy, simple but robust react hook for form like ui",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
