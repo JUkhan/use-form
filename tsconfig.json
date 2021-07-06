@@ -9,7 +9,7 @@
     "declaration": true,
     "noEmit": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["esnext","dom"],
+    "lib": ["esnext"],
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
